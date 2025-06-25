@@ -1,0 +1,249 @@
+:root {
+  --bg-color: #000000;
+  --surface-color: #0c005a;
+  --border-color: #4b23a0;
+  --text-color: #f0f0f0;
+  --hover-color: #ff9900;
+  --correct-color: #22c55e;
+  --incorrect-color: #d82020;
+  --item-color: #999;
+  --font-family: "Inter", sans-serif;
+  --border-thickness: 2px;
+  --fade-duration: 0.4s;
+}
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+#app-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+#top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+}
+#top-left-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#restart-btn,
+#help-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s;
+}
+
+#help-title {
+  font-size: 110%;
+  color: var(--hover-color);
+  text-align: center;
+}
+
+#help-title img {
+  height: 1em;
+  margin-right: 0.6em;
+}
+
+#score-counter {
+  display: flex;
+  gap: 1.5rem;
+}
+.score {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.score .iconoir-check {
+  color: var(--correct-color);
+}
+.score .iconoir-xmark {
+  color: var(--incorrect-color);
+}
+#loader {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+#quiz-container {
+  display: none;
+  /* MODIFIED: Added transition for fading effect */
+  transition: opacity var(--fade-duration) ease-in-out;
+}
+/* MODIFIED: New class to trigger the fade */
+#quiz-container.fading {
+  opacity: 0;
+}
+
+#dataset-source {
+  font-size: 0.8rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  min-height: 1rem;
+}
+#question-stem {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 1.5rem;
+  background-color: var(--surface-color);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+#choices-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  /* ADDED: Add a min-height to prevent layout collapse during fade */
+  min-height: 220px;
+}
+.choice-wrapper {
+  background: var(--border-color);
+  padding: var(--border-thickness);
+  clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0% 50%);
+  transition: background 0.2s ease-in-out;
+}
+
+.choice-wrapper.correct {
+  background: var(--correct-color);
+}
+.choice-wrapper.incorrect {
+  background: var(--incorrect-color);
+}
+.choice-btn {
+  font-family: var(--font-family);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-color);
+  background-color: var(--surface-color);
+  border: none;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0% 50%);
+  word-break: auto-phrase; /* experimental */
+}
+.choice-wrapper.disabled .choice-btn {
+  cursor: default;
+}
+.choice-wrapper.correct .choice-btn {
+  background: var(--correct-color);
+  color: #000;
+}
+.choice-wrapper.correct .choice-prefix {
+  color: #000;
+}
+
+.choice-wrapper.correct .item-C {
+  color: #444;
+}
+
+.choice-wrapper.correct .item-D {
+  color: #444;
+}
+
+.choice-prefix {
+  color: var(--hover-color);
+  padding-right: 0.5rem;
+  padding-left: 1.5rem;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: self-start;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    visibility 0s 0.2s,
+    opacity 0.2s;
+}
+.modal-overlay.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+.modal-content {
+  background: var(--surface-color);
+  color: var(--text-color);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  max-width: 90%;
+  width: 400px;
+  position: relative;
+  line-height: 1.6;
+}
+.modal-content h2 {
+  color: var(--hover-color);
+  margin-top: 0;
+}
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.item-A {
+  color: var(--item-color);
+}
+.item-B {
+  color: var(--item-color);
+}
+.item-C {
+  color: var(--item-color);
+  margin-right: 0.3em;
+}
+.item-D {
+  color: var(--item-color);
+  margin-left: 0.3em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #restart-btn:hover,
+  #help-btn:hover {
+    color: var(--hover-color);
+  }
+  .choice-wrapper:hover:not(.disabled) {
+    background: var(--hover-color);
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "short_name": "Mussol",
+  "version": "0.0.1",
+  "name": "Mussol",
+  "description": "Analogy quiz for humans based on AI training datasets",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000"
+}

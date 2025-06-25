@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" type="image/png" href="icon.png" />
+    <title>Mussol</title>
+    <link href="./fonts/inter.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./fonts/iconoir/iconoir.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app-container">
+      <div id="top-bar">
+        <div id="top-left-controls">
+          <button id="restart-btn" title="Restart Quiz">
+            <i class="iconoir-refresh-double"></i>
+          </button>
+          <button id="help-btn" title="Help">
+            <i class="iconoir-question-mark"></i>
+          </button>
+        </div>
+        <div id="score-counter">
+          <span class="score"
+            ><i class="iconoir-check"></i
+            ><span id="score-correct">0</span></span
+          >
+          <span class="score"
+            ><i class="iconoir-xmark"></i
+            ><span id="score-incorrect">0</span></span
+          >
+        </div>
+      </div>
+      <div id="loader">Loading datasets...</div>
+      <div id="quiz-container">
+        <div id="question-stem"></div>
+        <div id="choices-container"></div>
+        <div id="dataset-source"></div>
+      </div>
+    </div>
+
+    <div id="help-modal" class="modal-overlay">
+      <div class="modal-content">
+        <button class="modal-close-btn">&times;</button>
+        <h1 id="help-title"><img src="icon192.png" />Mussol v{{version}}</h1>
+        <h2>How to Play</h2>
+        <p>
+          The goal is to find the analogy. Read the first pair of words and
+          understand their relationship.
+        </p>
+        <p><strong>"A is to B..."</strong></p>
+        <p>
+          Then, select the answer from the four choices that has the most
+          similar relationship. Some might be weird, this is using AI training
+          datasets!
+        </p>
+        <ul>
+          <li>The score is tracked at the top right.</li>
+          <li>
+            Press the <i class="iconoir-refresh-double"></i> icon to restart the
+            quiz and reset the score.
+          </li>
+        </ul>
+        <h3>Dataset citation</h3>
+        <div class="citation">
+          <p>
+            <strong>Title:</strong> BERT is to NLP what AlexNet is to CV: Can
+            Pre-Trained Language Models Identify Analogies?
+          </p>
+          <p>
+            <strong>Authors:</strong> Asahi Ushio, Luis Espinosa-Anke, Steven
+            Schockaert, Jose Camacho-Collados
+          </p>
+          <p>
+            <strong>Publication:</strong> Proceedings of the ACL-IJCNLP 2021
+            Main Conference
+          </p>
+          <p><strong>Year:</strong> 2021</p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
