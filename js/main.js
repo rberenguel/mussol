@@ -40,15 +40,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionStemEl = document.getElementById("question-stem");
   const choicesContainerEl = document.getElementById("choices-container");
   const restartBtn = document.getElementById("restart-btn");
+  const skipBtn = document.getElementById("skip-btn");
   const scoreCorrectEl = document.getElementById("score-correct");
   const scoreIncorrectEl = document.getElementById("score-incorrect");
+  const scoreSkippedEl = document.getElementById("score-skipped");
 
   let allQuestions = [],
     currentCorrectAnswerIndex = -1,
     scoreCorrect = 0,
-    scoreIncorrect = 0;
+    scoreIncorrect = 0,
+    scoreSkipped = 0;
+
   const FADE_DURATION_MS = 400; // Must match --fade-duration in CSS
-  const POST_ANSWER_DELAY_MS = 2000; // Time to see the result before advancing
+  const POST_INCORRECT_ANSWER_DELAY_MS = 2000; // Time to see the result before advancing
+  const POST_CORRECT_ANSWER_DELAY_MS = 500; // Reduced time for correct answers
 
   const datasetMapping = {
     scan: "scan",
@@ -90,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateScoreDisplay = () => {
     scoreCorrectEl.textContent = scoreCorrect;
     scoreIncorrectEl.textContent = scoreIncorrect;
+    scoreSkippedEl.textContent = scoreSkipped;
   };
 
   const loadAllData = async () => {
@@ -123,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const displayRandomQuestion = () => {
     choicesContainerEl.innerHTML = "";
+    skipBtn.disabled = false;
 
     const questionData =
       allQuestions[Math.floor(Math.random() * allQuestions.length)];
@@ -168,38 +175,49 @@ document.addEventListener("DOMContentLoaded", () => {
       w.classList.add("disabled");
       w.onclick = null;
     });
+    skipBtn.disabled = true;
+
+    let delay;
 
     if (selectedIndex === currentCorrectAnswerIndex) {
       scoreCorrect++;
       selectedWrapper.classList.add("correct");
       triggerHaptic();
+      delay = POST_CORRECT_ANSWER_DELAY_MS;
     } else {
       scoreIncorrect++;
       selectedWrapper.classList.add("incorrect");
       choiceWrappers[currentCorrectAnswerIndex].classList.add("correct");
       triggerHapticError();
+      delay = POST_INCORRECT_ANSWER_DELAY_MS;
     }
     updateScoreDisplay();
 
-    // MODIFIED: Set a timer to automatically advance to the next question
-    setTimeout(loadNextQuestion, POST_ANSWER_DELAY_MS);
+    setTimeout(loadNextQuestion, delay);
   };
 
-  // ADDED: New function to handle the fade-out/fade-in sequence
   const loadNextQuestion = () => {
     quizContainerEl.classList.add("fading");
 
     setTimeout(() => {
-      displayRandomQuestion(); // Update content while invisible
-      quizContainerEl.classList.remove("fading"); // Fade back in
+      displayRandomQuestion();
+      quizContainerEl.classList.remove("fading");
     }, FADE_DURATION_MS);
+  };
+
+  const handleSkip = () => {
+    scoreSkipped++;
+    updateScoreDisplay();
+    triggerHaptic();
+    loadNextQuestion();
   };
 
   const handleRestart = () => {
     scoreCorrect = 0;
     scoreIncorrect = 0;
+    scoreSkipped = 0;
     updateScoreDisplay();
-    loadNextQuestion(); // Use the fading transition on restart too
+    loadNextQuestion();
   };
 
   const openModal = () => helpModal.classList.add("visible");
@@ -214,5 +232,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   restartBtn.addEventListener("click", handleRestart);
+  skipBtn.addEventListener("click", handleSkip);
   loadAllData();
 });

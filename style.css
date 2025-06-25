@@ -6,6 +6,7 @@
   --hover-color: #ff9900;
   --correct-color: #22c55e;
   --incorrect-color: #d82020;
+  --skipped-color: #ffc700;
   --item-color: #999;
   --font-family: "Inter", sans-serif;
   --border-thickness: 2px;
@@ -82,6 +83,9 @@ body {
 .score .iconoir-xmark {
   color: var(--incorrect-color);
 }
+.score .iconoir-shuffle {
+  color: var(--skipped-color);
+}
 #loader {
   text-align: center;
   font-size: 1.2rem;
@@ -89,10 +93,8 @@ body {
 
 #quiz-container {
   display: none;
-  /* MODIFIED: Added transition for fading effect */
   transition: opacity var(--fade-duration) ease-in-out;
 }
-/* MODIFIED: New class to trigger the fade */
 #quiz-container.fading {
   opacity: 0;
 }
@@ -120,8 +122,20 @@ body {
   flex-direction: column;
   gap: 0.8rem;
   margin-top: 1rem;
-  /* ADDED: Add a min-height to prevent layout collapse during fade */
   min-height: 220px;
+}
+#controls-container {
+  text-align: center;
+  margin-top: 1rem;
+}
+#skip-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s;
 }
 .choice-wrapper {
   background: var(--border-color);
@@ -240,7 +254,8 @@ body {
 
 @media (hover: hover) and (pointer: fine) {
   #restart-btn:hover,
-  #help-btn:hover {
+  #help-btn:hover,
+  #skip-btn:hover {
     color: var(--hover-color);
   }
   .choice-wrapper:hover:not(.disabled) {

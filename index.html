@@ -33,12 +33,21 @@
             ><i class="iconoir-xmark"></i
             ><span id="score-incorrect">0</span></span
           >
+          <span class="score"
+            ><i class="iconoir-shuffle"></i
+            ><span id="score-skipped">0</span></span
+          >
         </div>
       </div>
       <div id="loader">Loading datasets...</div>
       <div id="quiz-container">
         <div id="question-stem"></div>
         <div id="choices-container"></div>
+        <div id="controls-container">
+          <button id="skip-btn" title="Skip Question">
+            <i class="iconoir-shuffle"></i>
+          </button>
+        </div>
         <div id="dataset-source"></div>
       </div>
     </div>
@@ -63,6 +72,9 @@
           <li>
             Press the <i class="iconoir-refresh-double"></i> icon to restart the
             quiz and reset the score.
+          </li>
+          <li>
+            Press the <i class="iconoir-shuffle"></i> icon to skip a question.
           </li>
         </ul>
         <h3>Dataset citation</h3>
