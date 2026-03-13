@@ -55,18 +55,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const POST_INCORRECT_ANSWER_DELAY_MS = 2000; // Time to see the result before advancing
   const POST_CORRECT_ANSWER_DELAY_MS = 500; // Reduced time for correct answers
 
+  // prettier-ignore
+  const _allDatasets = { scan: "scan", trex: "t_rex_relational_similarity", conceptnet: "conceptnet_relational_similarity", bats: "bats", nell: "nell_relational_similarity", google: "google", u4: "u4", sat: "sat", u2: "u2", sat_metaphor: "sat_metaphor", semeval: "semeval2012_relational_similarity" };
+
   const datasetMapping = {
-    scan: "scan",
-    trex: "t_rex_relational_similarity",
-    conceptnet: "conceptnet_relational_similarity",
-    bats: "bats",
-    nell: "nell_relational_similarity",
-    google: "google",
-    u4: "u4",
     sat: "sat",
-    u2: "u2",
     sat_metaphor: "sat_metaphor",
-    semeval: "semeval2012_relational_similarity",
+    u2: "u2",
+    u4: "u4",
   };
   const fetchAndParseJsonl = async (url) => {
     try {
